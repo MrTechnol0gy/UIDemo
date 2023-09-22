@@ -1,19 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     // Singleton
     public static GameManager instance;
-    // Public reference to the UiManager
-    public UiManager uiManager;
-    // Private reference to the UiManager
-    private UiManager _uiManager;
-    // Public reference to the button manager
-    public ButtonManager buttonManager;
-    // Private reference to the button manager
-    private ButtonManager _buttonManager;
 
     // Awake is called before Start
     void Awake()
