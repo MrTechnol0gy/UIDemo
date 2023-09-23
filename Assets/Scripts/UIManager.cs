@@ -17,15 +17,24 @@ public class UIManager : MonoBehaviour
     public GameObject winScreenUI;
     // reference to the Lose Screen UI
     public GameObject loseScreenUI;
+    // bools for each UI
+    public bool mainMenuUIActive;
+    public bool pauseMenuUIActive;
+    public bool optionsMenuUIActive;
+    public bool gameplayUIActive;
+    public bool winScreenUIActive;
+    public bool loseScreenUIActive;
+    // float for the time the state started
     private float TimeStartedState;
+    // enum for the states
     public enum States
     {
-        mainmenu,
-        pausemenu,
-        options,
-        gameplay,
-        winscreen,
-        losescreen,
+        mainmenu = 0,
+        pausemenu = 1,
+        options = 2,
+        gameplay = 3,
+        winscreen = 4,
+        losescreen = 5,
     }
     private States _currentState = States.mainmenu;       //sets the starting state    
     public States currentState 
@@ -37,7 +46,7 @@ public class UIManager : MonoBehaviour
                 // Calling ended state for the previous state registered.
                 OnEndedState(_currentState);
                 
-                // Setting the new current state
+                // Setting the new current state based on active UI
                 _currentState = value;
                 
                 // Registering here the time we're starting the state
@@ -54,53 +63,28 @@ public class UIManager : MonoBehaviour
         switch (state) 
         {
             case States.mainmenu:
-                //Debug.Log("I am default."); 
-                mainMenuUI.SetActive(true);               
+                //Debug.Log("I am the main menu."); 
+                mainMenuUI.SetActive(true);   
                 break;
             case States.pausemenu:
                 //Debug.Log("I am paused.");   
-                pauseMenuUI.SetActive(true);             
+                pauseMenuUI.SetActive(true);  
                 break;
             case States.options:
                 //Debug.Log("I am options.");
-                optionsMenuUI.SetActive(true);                
+                optionsMenuUI.SetActive(true);    
                 break;
             case States.gameplay:
                 //Debug.Log("I am gameplay.");
-                gameplayUI.SetActive(true);                
+                gameplayUI.SetActive(true);       
                 break;
             case States.winscreen:
                 //Debug.Log("I am winscreen."); 
-                winScreenUI.SetActive(true);               
+                winScreenUI.SetActive(true);      
                 break;
             case States.losescreen:
                 //Debug.Log("I am losescreen.");   
-                loseScreenUI.SetActive(true);             
-                break;
-        }
-    }
-    // OnUpdatedState is for things that occur during the state (main actions)
-    public void OnUpdatedState(States state) 
-    {
-        switch (state) 
-        {
-            case States.mainmenu:
-                //Debug.Log("I am default."); 
-                break;
-            case States.pausemenu:
-                //Debug.Log("I am paused.");                
-                break;
-            case States.options:
-                //Debug.Log("I am options.");                
-                break;
-            case States.gameplay:
-                //Debug.Log("I am gameplay.");                
-                break;
-            case States.winscreen:
-                //Debug.Log("I am winscreen.");                
-                break;
-            case States.losescreen:
-                //Debug.Log("I am losescreen.");                
+                loseScreenUI.SetActive(true);  
                 break;
         }
     }
@@ -111,31 +95,36 @@ public class UIManager : MonoBehaviour
         switch (state) 
         {
             case States.mainmenu:
-                //Debug.Log("I am default.");
+                //Debug.Log("I am leaving the main menu.");
                 mainMenuUI.SetActive(false);
                 break;
             case States.pausemenu:
-                //Debug.Log("I am paused.");    
-                pauseMenuUI.SetActive(false);            
+                //Debug.Log("I am paused."); 
+                pauseMenuUI.SetActive(false);              
                 break;
             case States.options:
-                //Debug.Log("I am options.");   
-                optionsMenuUI.SetActive(false);             
+                //Debug.Log("I am options."); 
+                optionsMenuUI.SetActive(false);              
                 break;
             case States.gameplay:
-                //Debug.Log("I am gameplay."); 
-                gameplayUI.SetActive(false);               
+                //Debug.Log("I am gameplay.");
+                gameplayUI.SetActive(false);              
                 break;
             case States.winscreen:
-                //Debug.Log("I am winscreen.");   
-                winScreenUI.SetActive(false);             
+                //Debug.Log("I am winscreen.");
+                winScreenUI.SetActive(false);                
                 break;
             case States.losescreen:
-                //Debug.Log("I am losescreen.");  
-                loseScreenUI.SetActive(false);
-                .              
+                //Debug.Log("I am losescreen.");
+                loseScreenUI.SetActive(false);              
                 break;
         }
+    }
+
+    void Awake()
+    {
+        // Sets all UI to false
+        SetAllUIToFalse();
     }
     void Start()
     {
@@ -146,8 +135,60 @@ public class UIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        OnUpdatedState(currentState);
+        
     }
+
+    // Sets all Ui elements to inactive
+    public void SetAllUIToFalse()
+    {
+        mainMenuUI.SetActive(false);
+        pauseMenuUI.SetActive(false);
+        optionsMenuUI.SetActive(false);
+        gameplayUI.SetActive(false);
+        winScreenUI.SetActive(false);
+        loseScreenUI.SetActive(false);
+    }
+
+    // This method activates the main menu UI
+    public void MainMenu()
+    {
+        Debug.Log("Main Menu clicked");
+        currentState = States.mainmenu;
+    }
+
+    // This method activates the pause menu UI
+    public void PauseMenu()
+    {
+        Debug.Log("Pause Menu clicked");
+        currentState = States.pausemenu;
+    }
+
+    // This method activates the options menu UI
+    public void OptionsMenu()
+    {
+        Debug.Log("Options Menu clicked");
+        currentState = States.options;
+    }
+
+    // This method activates the gameplay UI
+    public void GameplayUI()
+    {
+        Debug.Log("Gameplay UI clicked");
+        currentState = States.gameplay;
+    }
+
+    // This method activates the win screen UI
+    public void WinScreen()
+    {
+        currentState = States.winscreen;
+    }
+
+    // This method activates the lose screen UI
+    public void LoseScreen()
+    {
+        currentState = States.losescreen;
+    }
+
 
     // This method can be used to test if a certain time has elapsed since we registered an event time. 
     public bool TimeElapsedSince(float timeEventHappened, float testingTimeElapsed) => !(timeEventHappened + testingTimeElapsed > Time.time);
