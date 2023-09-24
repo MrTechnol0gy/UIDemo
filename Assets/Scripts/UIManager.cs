@@ -17,15 +17,12 @@ public class UIManager : MonoBehaviour
     public GameObject winScreenUI;
     // reference to the Lose Screen UI
     public GameObject loseScreenUI;
-    // bools for each UI
-    public bool mainMenuUIActive;
-    public bool pauseMenuUIActive;
-    public bool optionsMenuUIActive;
-    public bool gameplayUIActive;
-    public bool winScreenUIActive;
-    public bool loseScreenUIActive;
+    // reference to the credits UI
+    public GameObject creditsUI;
     // float for the time the state started
     private float TimeStartedState;
+    // reference to the previous state
+    private States previousState;
     // enum for the states
     public enum States
     {
@@ -35,6 +32,7 @@ public class UIManager : MonoBehaviour
         gameplay = 3,
         winscreen = 4,
         losescreen = 5,
+        credits = 6,
     }
     private States _currentState = States.mainmenu;       //sets the starting state    
     public States currentState 
@@ -86,6 +84,10 @@ public class UIManager : MonoBehaviour
                 //Debug.Log("I am losescreen.");   
                 loseScreenUI.SetActive(true);  
                 break;
+            case States.credits:
+                //Debug.Log("I am credits.");   
+                creditsUI.SetActive(true);  
+                break;
         }
     }
 
@@ -97,26 +99,44 @@ public class UIManager : MonoBehaviour
             case States.mainmenu:
                 //Debug.Log("I am leaving the main menu.");
                 mainMenuUI.SetActive(false);
+                // Sets the previous state variable to this state
+                previousState = States.mainmenu;
                 break;
             case States.pausemenu:
                 //Debug.Log("I am paused."); 
-                pauseMenuUI.SetActive(false);              
+                pauseMenuUI.SetActive(false);  
+                // Sets the previous state variable to this state
+                previousState = States.pausemenu;            
                 break;
             case States.options:
                 //Debug.Log("I am options."); 
-                optionsMenuUI.SetActive(false);              
+                optionsMenuUI.SetActive(false);  
+                // Sets the previous state variable to this state
+                previousState = States.options;            
                 break;
             case States.gameplay:
                 //Debug.Log("I am gameplay.");
-                gameplayUI.SetActive(false);              
+                gameplayUI.SetActive(false);    
+                // Sets the previous state variable to this state
+                previousState = States.gameplay;          
                 break;
             case States.winscreen:
                 //Debug.Log("I am winscreen.");
-                winScreenUI.SetActive(false);                
+                winScreenUI.SetActive(false); 
+                // Sets the previous state variable to this state
+                previousState = States.winscreen;               
                 break;
             case States.losescreen:
                 //Debug.Log("I am losescreen.");
-                loseScreenUI.SetActive(false);              
+                loseScreenUI.SetActive(false); 
+                // Sets the previous state variable to this state
+                previousState = States.losescreen;             
+                break;
+            case States.credits:
+                //Debug.Log("I am credits.");
+                creditsUI.SetActive(false); 
+                // Sets the previous state variable to this state
+                previousState = States.credits;             
                 break;
         }
     }
@@ -132,12 +152,6 @@ public class UIManager : MonoBehaviour
         OnStartedState(currentState);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     // Sets all Ui elements to inactive
     public void SetAllUIToFalse()
     {
@@ -147,33 +161,34 @@ public class UIManager : MonoBehaviour
         gameplayUI.SetActive(false);
         winScreenUI.SetActive(false);
         loseScreenUI.SetActive(false);
+        creditsUI.SetActive(false);
     }
 
     // This method activates the main menu UI
     public void MainMenu()
     {
-        Debug.Log("Main Menu clicked");
+        //Debug.Log("Main Menu clicked");
         currentState = States.mainmenu;
     }
 
     // This method activates the pause menu UI
     public void PauseMenu()
     {
-        Debug.Log("Pause Menu clicked");
+        //Debug.Log("Pause Menu clicked");
         currentState = States.pausemenu;
     }
 
     // This method activates the options menu UI
     public void OptionsMenu()
     {
-        Debug.Log("Options Menu clicked");
+        //Debug.Log("Options Menu clicked");
         currentState = States.options;
     }
 
     // This method activates the gameplay UI
     public void GameplayUI()
     {
-        Debug.Log("Gameplay UI clicked");
+        //Debug.Log("Gameplay UI clicked");
         currentState = States.gameplay;
     }
 
@@ -189,6 +204,45 @@ public class UIManager : MonoBehaviour
         currentState = States.losescreen;
     }
 
+    // This method activates the credits UI
+    public void Credits()
+    {
+        currentState = States.credits;
+    }
+
+    // This method returns to the state prior to the current state
+    // Functions as a back/return button for the UI
+    public void Return()
+    {
+        if (previousState == States.mainmenu)
+        {
+            currentState = States.mainmenu;
+        }
+        else if (previousState == States.gameplay)
+        {
+            currentState = States.gameplay;
+        }
+        else if (previousState == States.pausemenu)
+        {
+            currentState = States.pausemenu;
+        }
+        else if (previousState == States.options)
+        {
+            currentState = States.options;
+        }
+        else if (previousState == States.winscreen)
+        {
+            currentState = States.winscreen;
+        }
+        else if (previousState == States.losescreen)
+        {
+            currentState = States.losescreen;
+        }
+        else if (previousState == States.credits)
+        {
+            currentState = States.credits;
+        }
+    }
 
     // This method can be used to test if a certain time has elapsed since we registered an event time. 
     public bool TimeElapsedSince(float timeEventHappened, float testingTimeElapsed) => !(timeEventHappened + testingTimeElapsed > Time.time);
