@@ -69,6 +69,8 @@ public class UIManager : MonoBehaviour
             case States.pausemenu:
                 //Debug.Log("I am paused.");   
                 pauseMenuUI.SetActive(true);  
+                // stops game time
+                Time.timeScale = 0f;
                 break;
             case States.options:
                 //Debug.Log("I am options.");
@@ -107,6 +109,8 @@ public class UIManager : MonoBehaviour
             case States.pausemenu:
                 //Debug.Log("I am paused."); 
                 pauseMenuUI.SetActive(false);  
+                // starts game time
+                Time.timeScale = 1f;
                 // Sets the previous state variable to this state
                 previousState = States.pausemenu;            
                 break;
