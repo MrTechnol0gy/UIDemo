@@ -28,6 +28,42 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
     
+    void Update()
+    {
+        // When the user presses Esc, pause the game
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            PauseGame();
+        }
+        // When the user presses 1, open the winscreen
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            WinGame();
+        }
+        // When the user presses 2, open the losescreen
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            LoseGame();
+        }
+    }
+
+    // Opens the lose screen
+    public void LoseGame()
+    {
+        UIManager.instance.currentState = UIManager.States.losescreen;
+    }
+    // Pauses the game
+    public void PauseGame()
+    {
+        UIManager.instance.currentState = UIManager.States.pausemenu;
+    }
+
+    // Opens the win screen
+    public void WinGame()
+    {
+        UIManager.instance.currentState = UIManager.States.winscreen;
+    }
+    
     // Quits the application
     public void QuitGame()
     {

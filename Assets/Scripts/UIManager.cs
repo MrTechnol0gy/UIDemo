@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {   
+    // Singleton
+    public static UIManager instance;
     // reference to the Main Menu UI
     public GameObject mainMenuUI;
     // reference to the Pause Menu UI
@@ -143,6 +145,18 @@ public class UIManager : MonoBehaviour
 
     void Awake()
     {
+        // Check if instance already exists
+        if (instance == null)
+        {
+            // If not, set instance to this
+            instance = this;
+        }
+        // If instance already exists and it's not this
+        else if (instance != this)
+        {
+            // Then destroy this. This enforces our singleton pattern, meaning there can only ever be one instance of a UIManager
+            Destroy(gameObject);
+        }
         // Sets all UI to false
         SetAllUIToFalse();
     }
