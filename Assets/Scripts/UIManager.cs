@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {   
@@ -25,6 +26,8 @@ public class UIManager : MonoBehaviour
     private float TimeStartedState;
     // reference to the previous state
     private States previousState;
+    // reference to the ship container
+    public GameObject shipContainer;
     // enum for the states
     public enum States
     {
@@ -82,11 +85,15 @@ public class UIManager : MonoBehaviour
                 break;
             case States.winscreen:
                 //Debug.Log("I am winscreen."); 
-                winScreenUI.SetActive(true);      
+                winScreenUI.SetActive(true);  
+                // stops game time
+                Time.timeScale = 0f;    
                 break;
             case States.losescreen:
                 //Debug.Log("I am losescreen.");   
                 loseScreenUI.SetActive(true);  
+                // stops game time
+                Time.timeScale = 0f;
                 break;
             case States.credits:
                 //Debug.Log("I am credits.");   
@@ -129,12 +136,16 @@ public class UIManager : MonoBehaviour
             case States.winscreen:
                 //Debug.Log("I am winscreen.");
                 winScreenUI.SetActive(false); 
+                // starts game time
+                Time.timeScale = 1f;
                 // Sets the previous state variable to this state
                 previousState = States.winscreen;               
                 break;
             case States.losescreen:
                 //Debug.Log("I am losescreen.");
                 loseScreenUI.SetActive(false); 
+                // starts game time
+                Time.timeScale = 1f;
                 // Sets the previous state variable to this state
                 previousState = States.losescreen;             
                 break;
@@ -161,6 +172,8 @@ public class UIManager : MonoBehaviour
             // Then destroy this. This enforces our singleton pattern, meaning there can only ever be one instance of a UIManager
             Destroy(gameObject);
         }
+        // Sets this to not be destroyed when reloading scene
+        DontDestroyOnLoad(gameObject);
         // Sets all UI to false
         SetAllUIToFalse();
     }
@@ -168,6 +181,15 @@ public class UIManager : MonoBehaviour
     {
         // Sets the current state to the default state
         OnStartedState(currentState);
+    }
+
+    void Update()
+    {
+        // Try to get the Ship Container object if it doesn't already have it
+        if (shipContainer == null)
+        {
+            shipContainer = GameObject.Find("Ship Container");
+        }
     }
 
     // Sets all Ui elements to inactive
@@ -207,6 +229,8 @@ public class UIManager : MonoBehaviour
     public void GameplayUI()
     {
         //Debug.Log("Gameplay UI clicked");
+        // Load the GamePlay scene
+        SceneManager.LoadScene("GamePlay");
         currentState = States.gameplay;
     }
 
@@ -232,7 +256,14 @@ public class UIManager : MonoBehaviour
     // Functions as a back/return button for the UI
     public void Return()
     {
-        if (previousState == States.mainmenu)
+        // if we're on the win screen or the lose screen...
+        if (currentState == States.winscreen || currentState == States.losescreen)
+        {
+            // ...load the main menu scene
+            SceneManager.LoadScene("MainMenu");
+            currentState = States.mainmenu;
+        }
+        else if (previousState == States.mainmenu)
         {
             currentState = States.mainmenu;
         }
@@ -247,15 +278,7 @@ public class UIManager : MonoBehaviour
         else if (previousState == States.options)
         {
             currentState = States.options;
-        }
-        else if (previousState == States.winscreen)
-        {
-            currentState = States.winscreen;
-        }
-        else if (previousState == States.losescreen)
-        {
-            currentState = States.losescreen;
-        }
+        }        
         else if (previousState == States.credits)
         {
             currentState = States.credits;

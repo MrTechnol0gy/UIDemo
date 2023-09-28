@@ -30,20 +30,24 @@ public class GameManager : MonoBehaviour
     
     void Update()
     {
-        // When the user presses Esc, pause the game
-        if (Input.GetKeyDown(KeyCode.Escape))
+        // if the current scene is the Gameplay scene...
+        if (SceneManager.GetActiveScene().name == "GamePlay")
         {
-            PauseGame();
-        }
-        // When the user presses 1, open the winscreen
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            WinGame();
-        }
-        // When the user presses 2, open the losescreen
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            LoseGame();
+            // When the user presses Esc, pause the game
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                PauseGame();
+            }
+            // When the user presses 1, open the winscreen
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                WinGame();
+            }
+            // When the user presses 2, open the losescreen
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                LoseGame();
+            }
         }
     }
 
