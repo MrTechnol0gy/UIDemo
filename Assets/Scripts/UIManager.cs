@@ -82,7 +82,9 @@ public class UIManager : MonoBehaviour
                 break;
             case States.options:
                 //Debug.Log("I am options.");
-                optionsMenuUI.SetActive(true);   
+                optionsMenuUI.SetActive(true); 
+                // stops game time
+                Time.timeScale = 0f;  
                 // Makes the cursor visible
                 Cursor.visible = true; 
                 break;
@@ -138,7 +140,9 @@ public class UIManager : MonoBehaviour
                 break;
             case States.options:
                 //Debug.Log("I am options."); 
-                optionsMenuUI.SetActive(false);  
+                optionsMenuUI.SetActive(false); 
+                // starts game time
+                Time.timeScale = 1f; 
                 // Sets the previous state variable to this state
                 previousState = States.options;            
                 break;
@@ -222,6 +226,12 @@ public class UIManager : MonoBehaviour
     // This method activates the main menu UI
     public void MainMenu()
     {
+        // If the current scene isn't the main menu scene...
+        if (SceneManager.GetActiveScene().name != "MainMenu")
+        {
+            // ...load the main menu scene
+            SceneManager.LoadScene("MainMenu");
+        }
         //Debug.Log("Main Menu clicked");
         currentState = States.mainmenu;
     }
