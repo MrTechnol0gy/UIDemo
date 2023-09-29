@@ -54,7 +54,7 @@ public class PlayerFlightControl : MonoBehaviour
 	void Start() {
 	
 		mousePos = new Vector2(0,0);	
-		DZ = CustomPointer.instance.deadzone_radius;
+		//DZ = CustomPointer.instance.deadzone_radius;
 		
 		roll = 0; //Setting this equal to 0 here as a failsafe in case the roll axis is not set up.
 

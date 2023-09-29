@@ -28,6 +28,7 @@ public class UIManager : MonoBehaviour
     private States previousState;
     // reference to the ship container
     public GameObject shipContainer;
+    
     // enum for the states
     public enum States
     {
@@ -68,36 +69,50 @@ public class UIManager : MonoBehaviour
             case States.mainmenu:
                 //Debug.Log("I am the main menu."); 
                 mainMenuUI.SetActive(true);   
+                // Makes the cursor visible
+                Cursor.visible = true;
                 break;
             case States.pausemenu:
                 //Debug.Log("I am paused.");   
                 pauseMenuUI.SetActive(true);  
                 // stops game time
                 Time.timeScale = 0f;
+                // Makes the cursor visible
+                Cursor.visible = true;
                 break;
             case States.options:
                 //Debug.Log("I am options.");
-                optionsMenuUI.SetActive(true);    
+                optionsMenuUI.SetActive(true);   
+                // Makes the cursor visible
+                Cursor.visible = true; 
                 break;
             case States.gameplay:
                 //Debug.Log("I am gameplay.");
-                gameplayUI.SetActive(true);       
+                gameplayUI.SetActive(true);   
+                // Makes the cursor invisible
+                Cursor.visible = false;                 
                 break;
             case States.winscreen:
                 //Debug.Log("I am winscreen."); 
                 winScreenUI.SetActive(true);  
                 // stops game time
-                Time.timeScale = 0f;    
+                Time.timeScale = 0f;  
+                // Makes the cursor visible
+                Cursor.visible = true;  
                 break;
             case States.losescreen:
                 //Debug.Log("I am losescreen.");   
                 loseScreenUI.SetActive(true);  
                 // stops game time
                 Time.timeScale = 0f;
+                // Makes the cursor visible
+                Cursor.visible = true;
                 break;
             case States.credits:
                 //Debug.Log("I am credits.");   
                 creditsUI.SetActive(true);  
+                // Makes the cursor visible
+                Cursor.visible = true;
                 break;
         }
     }
@@ -131,7 +146,7 @@ public class UIManager : MonoBehaviour
                 //Debug.Log("I am gameplay.");
                 gameplayUI.SetActive(false);    
                 // Sets the previous state variable to this state
-                previousState = States.gameplay;          
+                previousState = States.gameplay;                 
                 break;
             case States.winscreen:
                 //Debug.Log("I am winscreen.");
@@ -189,7 +204,7 @@ public class UIManager : MonoBehaviour
         if (shipContainer == null)
         {
             shipContainer = GameObject.Find("Ship Container");
-        }
+        }        
     }
 
     // Sets all Ui elements to inactive
