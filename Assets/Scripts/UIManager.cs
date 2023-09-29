@@ -292,7 +292,15 @@ public class UIManager : MonoBehaviour
         }
         else if (previousState == States.options)
         {
-            currentState = States.options;
+            // prevents an infinite loop between pause menu and options menu if you are in the Gameplay scene
+            if (currentState == States.pausemenu)
+            {
+                currentState = States.gameplay;
+            }
+            else
+            {
+                currentState = States.options;
+            }
         }        
         else if (previousState == States.credits)
         {
