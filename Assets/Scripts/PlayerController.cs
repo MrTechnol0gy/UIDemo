@@ -22,6 +22,14 @@ public class PlayerController : MonoBehaviour
         Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
+        // Capture mouse input for rotation
+        float mouseX = Input.GetAxis("Mouse X");
+        float mouseY = Input.GetAxis("Mouse Y");
+
+        // Adjust ship's rotation based on mouse input
+        Vector3 rotationDelta = new Vector3(-mouseY, mouseX, 0f) * rotationSpeed * Time.deltaTime;
+        transform.Rotate(rotationDelta);
+
         // Move forward or backward based on currentSpeed
         transform.Translate(Vector3.forward * currentSpeed * Time.deltaTime);
     }

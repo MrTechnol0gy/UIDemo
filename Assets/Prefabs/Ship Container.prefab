@@ -277,7 +277,7 @@ Transform:
   m_GameObject: {fileID: 5186921432889263872}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 500}
+  m_LocalPosition: {x: 0, y: 0, z: 150}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -293,7 +293,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2213964473274708040}
   - component: {fileID: 443759343901908159}
-  - component: {fileID: 1342627229956210289}
+  - component: {fileID: 2918224199575442564}
   m_Layer: 2
   m_Name: Ship Container
   m_TagString: Untagged
@@ -346,7 +346,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &1342627229956210289
+--- !u!114 &2918224199575442564
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -355,9 +355,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 8720279279355156774}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc40150847a528341b95b060c38f395a, type: 3}
+  m_Script: {fileID: 11500000, guid: d01407e81feca7349ae99c4a4095ae1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 7675048864116545648}
-  moveSpeed: 10
-  rotationSpeed: 5
+  actual_model: {fileID: 4731699192847513263}
+  weapon_hardpoint_1: {fileID: 0}
+  bullet: {fileID: 0}
+  targeter: {fileID: 7675048864116545648}
+  speed: 20
+  afterburner_speed: 40
+  slow_speed: 4
+  thrust_transition_speed: 5
+  turnspeed: 15
+  rollSpeedModifier: 7
+  pitchYaw_strength: 0.5
+  use_banking: 1
+  bank_angle_clamp: 360
+  bank_rotation_speed: 3
+  bank_rotation_multiplier: 1
+  screen_clamp: 500
+  roll: 0
+  yaw: 0
+  pitch: 0
+  afterburner_Active: 0
+  slow_Active: 0
