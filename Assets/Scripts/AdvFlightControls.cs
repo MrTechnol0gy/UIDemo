@@ -179,16 +179,14 @@ public class AdvFlightControls : MonoBehaviour
 		actual_model.transform.rotation = Quaternion.Slerp(actual_model.transform.rotation, newRotation, bank_rotation_speed * Time.deltaTime);
 	
 	}
-
 	
 	void Update() {
 	
 		//Please remove this and replace it with a shooting system that works for your game, if you need one.
-		if (Input.GetMouseButtonDown(0)) {
-			fireShot();
-		}
-	}
-	
+		// if (Input.GetMouseButtonDown(0)) {
+		// 	fireShot();
+		// }
+	}	
 	
 	public void fireShot() {
 	
@@ -232,5 +230,9 @@ public class AdvFlightControls : MonoBehaviour
 	
 	}
 	
-
+	// return the speed of the ship
+	public float getSpeed() 
+	{
+		return currentMag;
+	}
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {   
@@ -28,6 +29,12 @@ public class UIManager : MonoBehaviour
     private States previousState;
     // reference to the ship container
     public GameObject shipContainer;
+    // reference to the Advanced Flight Controls Script
+    private AdvFlightControls AdvFlightControls;
+    // reference to the particle system
+    public ParticleSystem spatialUIParticleSystem;
+    // reference to the Tmpro HUD_Speed text
+    public GameObject HUD_Speed_NonDiagetic;
     
     // enum for the states
     public enum States
@@ -92,7 +99,7 @@ public class UIManager : MonoBehaviour
                 //Debug.Log("I am gameplay.");
                 gameplayUI.SetActive(true);   
                 // Makes the cursor invisible
-                Cursor.visible = false;                 
+                Cursor.visible = false; 
                 break;
             case States.winscreen:
                 //Debug.Log("I am winscreen."); 
@@ -150,7 +157,9 @@ public class UIManager : MonoBehaviour
                 //Debug.Log("I am gameplay.");
                 gameplayUI.SetActive(false);    
                 // Sets the previous state variable to this state
-                previousState = States.gameplay;                 
+                previousState = States.gameplay;  
+                // Makes the cursor visible
+                Cursor.visible = true;              
                 break;
             case States.winscreen:
                 //Debug.Log("I am winscreen.");
@@ -203,12 +212,47 @@ public class UIManager : MonoBehaviour
     }
 
     void Update()
-    {
-        // Try to get the Ship Container object if it doesn't already have it
-        if (shipContainer == null)
+    {        
+        // If the current state is gameplay...
+        if (currentState == States.gameplay)
         {
-            shipContainer = GameObject.Find("Ship Container");
-        }        
+            if (shipContainer == null)
+            {
+                Debug.Log("Ship Container not found.");
+                // get the ship container
+                shipContainer = GameObject.Find("Ship Container");
+                if (shipContainer != null)
+                {
+                    Debug.Log("Ship Container found.");
+                    // get the AdvFlightControls script
+                    AdvFlightControls = shipContainer.GetComponent<AdvFlightControls>();
+                    // get the particle system
+                    spatialUIParticleSystem = shipContainer.GetComponentInChildren<ParticleSystem>();
+                    if (AdvFlightControls != null)
+                    {
+                        Debug.Log("AdvFlightControls found.");
+                    }
+                    if (spatialUIParticleSystem != null)
+                    {
+                        Debug.Log("Trail Particle System found.");
+                    }
+                }
+            }
+            else
+            {
+                // update the HUD_Speed_NonDiagetic text
+                HUD_Speed_NonDiagetic.GetComponent<TextMeshProUGUI>().text = "Speed: " + AdvFlightControls.getSpeed() + " m/s";
+                // adjust the particle system emission rate based on the speed
+                var emission = spatialUIParticleSystem.emission;
+                emission.rateOverTime = AdvFlightControls.getSpeed();
+                // adjust the particle system start speed based on the speed
+                var main = spatialUIParticleSystem.main;
+                main.startSpeed = AdvFlightControls.getSpeed() / 2;
+                // adjust the particle lifetime based on the speed
+                var lifetime = spatialUIParticleSystem.main;
+                lifetime.startLifetime = AdvFlightControls.getSpeed() / 10;
+            }            
+        }     
     }
 
     // Sets all Ui elements to inactive
