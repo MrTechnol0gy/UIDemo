@@ -35,6 +35,15 @@ public class UIManager : MonoBehaviour
     public ParticleSystem spatialUIParticleSystem;
     // reference to the Tmpro HUD_Speed text
     public GameObject HUD_Speed_NonDiagetic;
+    public AudioSource audioSource;
+    // list of audio clips
+    public List<AudioClip> audioClips;
+    // time since speed last reached maximum
+    private float timeSinceSpeedMax = 0f;
+    private bool speedMaxAudioPlayed = false;
+    // time since speed last reached minimum
+    private float timeSinceSpeedMin = 0f;
+    private bool speedMinAudioPlayed = false;
     
     // enum for the states
     public enum States
@@ -251,7 +260,44 @@ public class UIManager : MonoBehaviour
                 // adjust the particle lifetime based on the speed
                 var lifetime = spatialUIParticleSystem.main;
                 lifetime.startLifetime = AdvFlightControls.getSpeed() / 10;
-            }            
+
+                // if the speed is at the maximum...
+                if (AdvFlightControls.getSpeed() > 10 && !speedMaxAudioPlayed)
+                {
+                    // ...increment the time since speed last reached maximum
+                    timeSinceSpeedMax += Time.deltaTime;
+                    // if the time since speed last reached maximum is greater than 1 second...
+                    if (timeSinceSpeedMax > 1f)
+                    {
+                        // set the speed max audio played to true
+                        speedMaxAudioPlayed = true;
+                        // set the speed min audio played to false
+                        speedMinAudioPlayed = false;
+                        // ...play the speed max audio clip
+                        audioSource.PlayOneShot(audioClips[1]);
+                        // reset the time since speed last reached maximum
+                        timeSinceSpeedMax = 0f;
+                    }
+                }
+                // if the speed is at the minimum...
+                else if (AdvFlightControls.getSpeed() < 5 && !speedMinAudioPlayed)
+                {
+                    // ...increment the time since speed last reached minimum
+                    timeSinceSpeedMin += Time.deltaTime;
+                    // if the time since speed last reached minimum is greater than 1 second...
+                    if (timeSinceSpeedMin > 1f)
+                    {
+                        // set the speed min audio played to true
+                        speedMinAudioPlayed = true;
+                        // set the speed max audio played to false
+                        speedMaxAudioPlayed = false;
+                        // ...play the speed min audio clip
+                        audioSource.PlayOneShot(audioClips[0]);
+                        // reset the time since speed last reached minimum
+                        timeSinceSpeedMin = 0f;
+                    }
+                }      
+            }
         }     
     }
 
