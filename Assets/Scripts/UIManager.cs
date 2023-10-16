@@ -47,6 +47,8 @@ public class UIManager : MonoBehaviour
     // time since speed last reached minimum
     private float timeSinceSpeedMin = 0f;
     private bool speedMinAudioPlayed = false;
+    private bool isMuted = false;
+    public Toggle muteToggle;
     
     // enum for the states
     public enum States
@@ -415,6 +417,20 @@ public class UIManager : MonoBehaviour
         else if (previousState == States.credits)
         {
             currentState = States.credits;
+        }
+    }
+
+    public void ToggleMute()
+    {
+        if (isMuted)
+        {
+            isMuted = false;
+            audioSource.mute = false;
+        }
+        else
+        {
+            isMuted = true;
+            audioSource.mute = true;
         }
     }
 
