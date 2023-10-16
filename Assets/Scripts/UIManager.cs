@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using TMPro;
 
 public class UIManager : MonoBehaviour
@@ -35,6 +36,8 @@ public class UIManager : MonoBehaviour
     public ParticleSystem spatialUIParticleSystem;
     // reference to the Tmpro HUD_Speed text
     public GameObject HUD_Speed_NonDiagetic;
+    // reference to the speedlines image
+    public Image speedlines;
     public AudioSource audioSource;
     // list of audio clips
     public List<AudioClip> audioClips;
@@ -260,6 +263,13 @@ public class UIManager : MonoBehaviour
                 // adjust the particle lifetime based on the speed
                 var lifetime = spatialUIParticleSystem.main;
                 lifetime.startLifetime = AdvFlightControls.getSpeed() / 10;
+
+                // update the HUD_Speed_Meta image alpha
+                float playerSpeed = AdvFlightControls.getSpeed();
+                float alpha = playerSpeed / 100;
+                Color imageColor = speedlines.color;
+                imageColor.a = alpha;
+                speedlines.color = imageColor;
 
                 // if the speed is at the maximum...
                 if (AdvFlightControls.getSpeed() > 10 && !speedMaxAudioPlayed)
