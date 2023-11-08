@@ -186,6 +186,16 @@ public class AdvFlightControls : MonoBehaviour
 		// if (Input.GetMouseButtonDown(0)) {
 		// 	fireShot();
 		// }
+		
+		// Reduce Health if the player presses H
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            UIManager.instance.DecreaseHealth();
+        }
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            UIManager.instance.IncreaseHealth();
+        }
 	}	
 	
 	public void fireShot() {

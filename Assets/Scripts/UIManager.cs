@@ -49,6 +49,7 @@ public class UIManager : MonoBehaviour
     private bool speedMinAudioPlayed = false;
     private bool isMuted = false;
     public Toggle muteToggle;
+    public Slider slider;
     
     // enum for the states
     public enum States
@@ -113,7 +114,7 @@ public class UIManager : MonoBehaviour
                 //Debug.Log("I am gameplay.");
                 gameplayUI.SetActive(true);   
                 // Makes the cursor invisible
-                Cursor.visible = false; 
+                Cursor.visible = false;
                 break;
             case States.winscreen:
                 //Debug.Log("I am winscreen."); 
@@ -242,6 +243,10 @@ public class UIManager : MonoBehaviour
                     AdvFlightControls = shipContainer.GetComponent<AdvFlightControls>();
                     // get the particle system
                     spatialUIParticleSystem = shipContainer.GetComponentInChildren<ParticleSystem>();
+                    // set the reference to the slider
+                    slider = shipContainer.GetComponentInChildren<Slider>();
+                    // set the slider to the max value
+                    slider.value = slider.maxValue;
                     if (AdvFlightControls != null)
                     {
                         Debug.Log("AdvFlightControls found.");
@@ -432,6 +437,19 @@ public class UIManager : MonoBehaviour
             isMuted = true;
             audioSource.mute = true;
         }
+    }
+
+    public void IncreaseHealth()
+    {
+        Debug.Log("Increase health");
+        slider.value += 10;
+        Debug.Log(slider.value);
+    }
+    public void DecreaseHealth()
+    {
+        Debug.Log("Decrease health");
+        slider.value -= 10;
+        Debug.Log(slider.value);
     }
 
     // This method can be used to test if a certain time has elapsed since we registered an event time. 

@@ -497,6 +497,16 @@ PrefabInstance:
       propertyPath: afterburner_speed
       value: 50
       objectReference: {fileID: 0}
+    - target: {fileID: 7533079574371678650, guid: d345ea8c708dd2e438fd7182abf1c647,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7533079574371678650, guid: d345ea8c708dd2e438fd7182abf1c647,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7675048864116545648, guid: d345ea8c708dd2e438fd7182abf1c647,
         type: 3}
       propertyPath: m_LocalPosition.z
