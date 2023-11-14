@@ -38,9 +38,12 @@ public class UIManager : MonoBehaviour
     public GameObject HUD_Speed_NonDiagetic;
     // reference to the speedlines image
     public Image speedlines;
-    public AudioSource audioSource;
+    public AudioSource sfxAudioSource;
+    public AudioSource bgmAudioSource;
     // list of audio clips
     public List<AudioClip> audioClips;
+    // bgm audio clip
+    public AudioClip bgm;
     // time since speed last reached maximum
     private float timeSinceSpeedMax = 0f;
     private bool speedMaxAudioPlayed = false;
@@ -49,7 +52,10 @@ public class UIManager : MonoBehaviour
     private bool speedMinAudioPlayed = false;
     private bool isMuted = false;
     public Toggle muteToggle;
-    public Slider slider;
+    public Slider healthSlider;
+    public Slider speedSlider;
+    public Slider bgmVolumeSlider;
+    public Slider sfxVolumeSlider;
     
     // enum for the states
     public enum States
@@ -93,6 +99,11 @@ public class UIManager : MonoBehaviour
                 mainMenuUI.SetActive(true);   
                 // Makes the cursor visible
                 Cursor.visible = true;
+                // If the BGM isn't already playing, play it
+                if (!bgmAudioSource.isPlaying)
+                {
+                    bgmAudioSource.PlayOneShot(bgm);
+                }
                 break;
             case States.pausemenu:
                 //Debug.Log("I am paused.");   
@@ -101,6 +112,9 @@ public class UIManager : MonoBehaviour
                 Time.timeScale = 0f;
                 // Makes the cursor visible
                 Cursor.visible = true;
+                // Pause the BGM & SFX
+                bgmAudioSource.Pause();
+                sfxAudioSource.Pause();
                 break;
             case States.options:
                 //Debug.Log("I am options.");
@@ -108,7 +122,10 @@ public class UIManager : MonoBehaviour
                 // stops game time
                 Time.timeScale = 0f;  
                 // Makes the cursor visible
-                Cursor.visible = true; 
+                Cursor.visible = true;
+                // Pause the BGM
+                bgmAudioSource.Pause();
+                sfxAudioSource.Pause();
                 break;
             case States.gameplay:
                 //Debug.Log("I am gameplay.");
@@ -158,7 +175,10 @@ public class UIManager : MonoBehaviour
                 // starts game time
                 Time.timeScale = 1f;
                 // Sets the previous state variable to this state
-                previousState = States.pausemenu;            
+                previousState = States.pausemenu;    
+                // Unpause the BGM
+                bgmAudioSource.UnPause();  
+                sfxAudioSource.UnPause();      
                 break;
             case States.options:
                 //Debug.Log("I am options."); 
@@ -166,7 +186,10 @@ public class UIManager : MonoBehaviour
                 // starts game time
                 Time.timeScale = 1f; 
                 // Sets the previous state variable to this state
-                previousState = States.options;            
+                previousState = States.options; 
+                // Unpause the BGM
+                bgmAudioSource.UnPause(); 
+                sfxAudioSource.UnPause();           
                 break;
             case States.gameplay:
                 //Debug.Log("I am gameplay.");
@@ -243,10 +266,10 @@ public class UIManager : MonoBehaviour
                     AdvFlightControls = shipContainer.GetComponent<AdvFlightControls>();
                     // get the particle system
                     spatialUIParticleSystem = shipContainer.GetComponentInChildren<ParticleSystem>();
-                    // set the reference to the slider
-                    slider = shipContainer.GetComponentInChildren<Slider>();
+                    // set the reference to the health slider
+                    healthSlider = shipContainer.GetComponentInChildren<Slider>();
                     // set the slider to the max value
-                    slider.value = slider.maxValue;
+                    healthSlider.value = healthSlider.maxValue;
                     if (AdvFlightControls != null)
                     {
                         Debug.Log("AdvFlightControls found.");
@@ -278,6 +301,9 @@ public class UIManager : MonoBehaviour
                 imageColor.a = alpha;
                 speedlines.color = imageColor;
 
+                // update the HUD_Speed_Wheel "slider" value
+                speedSlider.value = AdvFlightControls.getSpeed();
+
                 // if the speed is at the maximum...
                 if (AdvFlightControls.getSpeed() > 10 && !speedMaxAudioPlayed)
                 {
@@ -291,7 +317,7 @@ public class UIManager : MonoBehaviour
                         // set the speed min audio played to false
                         speedMinAudioPlayed = false;
                         // ...play the speed max audio clip
-                        audioSource.PlayOneShot(audioClips[1]);
+                        sfxAudioSource.PlayOneShot(audioClips[1]);
                         // reset the time since speed last reached maximum
                         timeSinceSpeedMax = 0f;
                     }
@@ -309,7 +335,7 @@ public class UIManager : MonoBehaviour
                         // set the speed max audio played to false
                         speedMaxAudioPlayed = false;
                         // ...play the speed min audio clip
-                        audioSource.PlayOneShot(audioClips[0]);
+                        sfxAudioSource.PlayOneShot(audioClips[0]);
                         // reset the time since speed last reached minimum
                         timeSinceSpeedMin = 0f;
                     }
@@ -430,26 +456,38 @@ public class UIManager : MonoBehaviour
         if (isMuted)
         {
             isMuted = false;
-            audioSource.mute = false;
+            sfxAudioSource.mute = false;
+            bgmAudioSource.mute = false;
         }
         else
         {
             isMuted = true;
-            audioSource.mute = true;
+            sfxAudioSource.mute = true;
+            bgmAudioSource.mute = true;
         }
+    }
+
+    public void AdjustBGMVolume()
+    {
+        bgmAudioSource.volume = bgmVolumeSlider.value;
+    }
+
+    public void AdjustSFXVolume()
+    {
+        sfxAudioSource.volume = sfxVolumeSlider.value;
     }
 
     public void IncreaseHealth()
     {
         Debug.Log("Increase health");
-        slider.value += 10;
-        Debug.Log(slider.value);
+        healthSlider.value += 10;
+        Debug.Log(healthSlider.value);
     }
     public void DecreaseHealth()
     {
         Debug.Log("Decrease health");
-        slider.value -= 10;
-        Debug.Log(slider.value);
+        healthSlider.value -= 10;
+        Debug.Log(healthSlider.value);
     }
 
     // This method can be used to test if a certain time has elapsed since we registered an event time. 
