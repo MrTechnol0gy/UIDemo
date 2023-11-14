@@ -56,6 +56,9 @@ public class UIManager : MonoBehaviour
     public Slider speedSlider;
     public Slider bgmVolumeSlider;
     public Slider sfxVolumeSlider;
+    public Slider progressBarSlider;
+    public TextMeshProUGUI progressBarText;
+    private float progress = 0f;
     
     // enum for the states
     public enum States
@@ -242,6 +245,11 @@ public class UIManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         // Sets all UI to false
         SetAllUIToFalse();
+        // Set the progress bar to 0
+        progressBarSlider.value = 0;
+        // Set the progress bar text to 0
+        progressBarText.text = "0%";
+        
     }
     void Start()
     {
@@ -488,6 +496,14 @@ public class UIManager : MonoBehaviour
         Debug.Log("Decrease health");
         healthSlider.value -= 10;
         Debug.Log(healthSlider.value);
+    }
+
+    // Update the progress bar and text
+    public void UpdateProgressBar(float increaseToProgress)
+    {
+        progress += increaseToProgress;
+        progressBarSlider.value = progress;
+        progressBarText.text = progress.ToString("0") + "%";
     }
 
     // This method can be used to test if a certain time has elapsed since we registered an event time. 

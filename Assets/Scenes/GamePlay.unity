@@ -545,8 +545,9 @@ GameObject:
   - component: {fileID: 482473904}
   - component: {fileID: 482473903}
   - component: {fileID: 482473907}
+  - component: {fileID: 482473908}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: BorgrasII
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -653,6 +654,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1835236368}
   objectToRotate: {fileID: 482473906}
+--- !u!114 &482473908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 482473902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 711d850631ed424438307e4910823f30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  numberOfSpheres: 50
+  areaSize: 400
+  spherePrefab: {fileID: 5301617611934251786, guid: 25baa5b3a06164041982470bf1483842,
+    type: 3}
 --- !u!1 &1717778050
 GameObject:
   m_ObjectHideFlags: 0
