@@ -126,9 +126,6 @@ public class UIManager : MonoBehaviour
                 Time.timeScale = 0f;  
                 // Makes the cursor visible
                 Cursor.visible = true;
-                // Pause the BGM
-                bgmAudioSource.Pause();
-                sfxAudioSource.Pause();
                 break;
             case States.gameplay:
                 //Debug.Log("I am gameplay.");
@@ -189,10 +186,7 @@ public class UIManager : MonoBehaviour
                 // starts game time
                 Time.timeScale = 1f; 
                 // Sets the previous state variable to this state
-                previousState = States.options; 
-                // Unpause the BGM
-                bgmAudioSource.UnPause(); 
-                sfxAudioSource.UnPause();           
+                previousState = States.options;    
                 break;
             case States.gameplay:
                 //Debug.Log("I am gameplay.");
