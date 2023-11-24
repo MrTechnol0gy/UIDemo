@@ -58,7 +58,15 @@ public class UIManager : MonoBehaviour
     public Slider sfxVolumeSlider;
     public Slider progressBarSlider;
     public TextMeshProUGUI progressBarText;
+    [Header("Main Menu Buttons")]
+    public Button startButton;
+    public Button optionsButton;
+    public Button creditsButton;
+    public Button quitButton;
+    private bool mainMenuEnabled = false;
     private float progress = 0f;
+
+    private string websiteURL = "https://mrtechnol0gy.com/";
     
     // enum for the states
     public enum States
@@ -498,6 +506,31 @@ public class UIManager : MonoBehaviour
         progress += increaseToProgress;
         progressBarSlider.value = progress;
         progressBarText.text = progress.ToString("0") + "%";
+    }
+
+    public void EnableMainMenu()
+    {
+        if (!mainMenuEnabled)
+        {
+            mainMenuEnabled = true;
+            startButton.interactable = true;
+            optionsButton.interactable = true;
+            creditsButton.interactable = true;
+            quitButton.interactable = true;
+        }
+        else
+        {
+            mainMenuEnabled = false;
+            startButton.interactable = false;
+            optionsButton.interactable = false;
+            creditsButton.interactable = false;
+            quitButton.interactable = false;
+        }
+    }
+
+    public void OpenWebsite()
+    {
+        Application.OpenURL(websiteURL);
     }
 
     // This method can be used to test if a certain time has elapsed since we registered an event time. 
