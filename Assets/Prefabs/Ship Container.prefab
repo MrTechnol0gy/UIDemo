@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7881379117062172979}
   - component: {fileID: 2894392592332221317}
   - component: {fileID: 3292394585350764098}
+  - component: {fileID: 4499627818060367998}
   m_Layer: 2
   m_Name: Main Camera
   m_TagString: Untagged
@@ -137,6 +138,21 @@ MonoBehaviour:
     mipBias: 0
     varianceClampScale: 0.9
     contrastAdaptiveSharpening: 0
+--- !u!114 &4499627818060367998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 794396165618196962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 413c97058fe7cae44b9e891ee56b5204, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainCamera: {fileID: 7881379117062172979}
+  shakeMagnitude: 0.1
+  shakeDuration: 0
 --- !u!1 &1200363758672752023
 GameObject:
   m_ObjectHideFlags: 0
@@ -490,7 +506,7 @@ Transform:
   m_GameObject: {fileID: 5186921432889263872}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 150}
+  m_LocalPosition: {x: 0, y: 0, z: 100}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5624,9 +5640,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8720279279355156774}
   serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 4
+  m_Mass: 10
+  m_Drag: 1
+  m_AngularDrag: 6
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -5655,12 +5671,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d01407e81feca7349ae99c4a4095ae1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainCamera: {fileID: 7881379117062172979}
+  shakeDuration: 0.5
+  shakeAmount: 0.7
   actual_model: {fileID: 4731699192847513263}
   weapon_hardpoint_1: {fileID: 0}
   bullet: {fileID: 0}
   targeter: {fileID: 7675048864116545648}
-  speed: 20
-  afterburner_speed: 40
+  speed: 0
+  afterburner_speed: 50
   slow_speed: 4
   thrust_transition_speed: 5
   turnspeed: 15

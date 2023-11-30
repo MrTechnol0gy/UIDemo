@@ -4,6 +4,12 @@ using System.Collections;
 [System.Serializable]
 public class AdvFlightControls : MonoBehaviour
 {
+	[Header("Camera Shake")]
+	public Camera mainCamera; //Main camera. Used for screen shake.
+	public float shakeDuration = 0.5f; //Duration of the shake effect
+	public float shakeAmount = 0.7f; //Amplitude of the shake. A larger value shakes the camera harder.
+	private bool isShaking = false; //Is the camera currently shaking?
+	private Vector3 originalPos; //Original position of the camera. Used for resetting after the shake effect.
 
 	//"Objects", "For the main ship Game Object and weapons"));
 	public GameObject actual_model; //"Ship GameObject", "Point this to the Game Object that actually contains the mesh for the ship. Generally, this is the first child of the empty container object this controller is placed in."
@@ -54,9 +60,9 @@ public class AdvFlightControls : MonoBehaviour
 	
 	void Start() {
 	
-		mousePos = new Vector2(0,0);
-		
-		roll = 0; //Setting this equal to 0 here as a failsafe in case the roll axis is not set up.
+		mousePos = new Vector2(0,0);		
+		roll = 0; 												//Setting this equal to 0 here as a failsafe in case the roll axis is not set up.
+		originalPos = mainCamera.transform.localPosition; 		//Store the original position of the camera so we can reset it after the shake effect.
 
 		//Error handling, in case one of the inputs aren't set up.
 		try {
@@ -95,17 +101,23 @@ public class AdvFlightControls : MonoBehaviour
 		
 		//If input on the thrust axis is positive, activate afterburners.
 		if (thrust_exists) {
-			if (Input.GetAxis("Thrust") > 0) {
+			if (Input.GetAxis("Thrust") > 0) 
+			{
+				//Debug.Log("Afterburner");
 				afterburner_Active = true;
 				slow_Active = false;
 				currentMag = Mathf.Lerp(currentMag, afterburner_speed, thrust_transition_speed * Time.deltaTime);
 				
-			} else if (Input.GetAxis("Thrust") < 0) { 	//If input on the thrust axis is negatve, activate brakes.
+			} 
+			else if (Input.GetAxis("Thrust") < 0) 
+			{ 	//If input on the thrust axis is negatve, activate brakes.
 				slow_Active = true;
 				afterburner_Active = false;
 				currentMag = Mathf.Lerp(currentMag, slow_speed, thrust_transition_speed * Time.deltaTime);
 				
-			} else { //Otherwise, hold normal speed.
+			} 
+			else 
+			{ //Otherwise, hold normal speed.
 				slow_Active = false;
 				afterburner_Active = false;
 				currentMag = Mathf.Lerp(currentMag, speed, thrust_transition_speed * Time.deltaTime);
@@ -196,7 +208,27 @@ public class AdvFlightControls : MonoBehaviour
         {
             UIManager.instance.IncreaseHealth();
         }
+		// if (Input.GetKey(KeyCode.W))
+		// {
+		// 	StartCoroutine(Shake());
+		// }
+		// else
+		// {
+		// 	isShaking = false;
+		// 	mainCamera.transform.localPosition = originalPos;
+		// }
 	}	
+
+	IEnumerator Shake()
+	{
+		isShaking = true;
+		float x = Random.Range(-originalPos.x, originalPos.x) * shakeAmount;
+		float y = Random.Range(-originalPos.y, originalPos.y) * shakeAmount;
+
+		mainCamera.transform.localPosition = new Vector3(x, y, originalPos.z);
+
+		yield return null;
+	}
 	
 	// return the speed of the ship
 	public float getSpeed() 

@@ -412,31 +412,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 443759343901908159, guid: d345ea8c708dd2e438fd7182abf1c647,
-        type: 3}
-      propertyPath: m_Drag
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 443759343901908159, guid: d345ea8c708dd2e438fd7182abf1c647,
-        type: 3}
-      propertyPath: m_Mass
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 443759343901908159, guid: d345ea8c708dd2e438fd7182abf1c647,
-        type: 3}
-      propertyPath: m_AngularDrag
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 443759343901908159, guid: d345ea8c708dd2e438fd7182abf1c647,
-        type: 3}
-      propertyPath: m_ImplicitCom
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1342627229956210289, guid: d345ea8c708dd2e438fd7182abf1c647,
-        type: 3}
-      propertyPath: rotationSpeed
-      value: 100
-      objectReference: {fileID: 0}
     - target: {fileID: 2213964473274708040, guid: d345ea8c708dd2e438fd7182abf1c647,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -487,15 +462,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2918224199575442564, guid: d345ea8c708dd2e438fd7182abf1c647,
+    - target: {fileID: 4499627818060367998, guid: d345ea8c708dd2e438fd7182abf1c647,
         type: 3}
-      propertyPath: speed
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2918224199575442564, guid: d345ea8c708dd2e438fd7182abf1c647,
-        type: 3}
-      propertyPath: afterburner_speed
-      value: 50
+      propertyPath: shakeMagnitude
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7533079574371678650, guid: d345ea8c708dd2e438fd7182abf1c647,
         type: 3}
@@ -506,21 +476,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7675048864116545648, guid: d345ea8c708dd2e438fd7182abf1c647,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 7754738774831709041, guid: d345ea8c708dd2e438fd7182abf1c647,
-        type: 3}
-      propertyPath: moveSpeed
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 7754738774831709041, guid: d345ea8c708dd2e438fd7182abf1c647,
-        type: 3}
-      propertyPath: slowDownSpeed
-      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8720279279355156774, guid: d345ea8c708dd2e438fd7182abf1c647,
         type: 3}
