@@ -44,6 +44,7 @@ public class UIManager : MonoBehaviour
     public List<AudioClip> audioClips;
     // bgm audio clip
     public AudioClip bgm;
+    public AudioClip buttonSFX;
     // time since speed last reached maximum
     private float timeSinceSpeedMax = 0f;
     private bool speedMaxAudioPlayed = false;
@@ -459,6 +460,12 @@ public class UIManager : MonoBehaviour
         {
             currentState = States.credits;
         }
+    }
+
+    // Play the button SFX
+    public void PlayButtonSFX()
+    {
+        sfxAudioSource.PlayOneShot(buttonSFX);
     }
 
     public void ToggleMute()
